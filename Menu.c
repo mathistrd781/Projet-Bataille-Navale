@@ -1,18 +1,14 @@
-//
-// Created by mathi on 14/11/2022.
-//
-
 #include "header.h"
 
-void menu()
+void menu(char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi)
 {
     int i;
     int x = 15, y = 53;
     char toucheMenu = '0';
     char toucheRetourMenu = '0';
 
+    do {
     hide_cursor(0);
-
 
     ///AFFICHAGE COMMANDES GENERALES
     Couleur(CouleurTexte, CouleurFond);
@@ -179,17 +175,14 @@ void menu()
     if(x == 15)
     {
         system("cls");
-        jeu();
-        actionJoueur();
 
-        ///RETOUR MENU
-        do
-        {
-            toucheRetourMenu = getch();
-        } while(toucheRetourMenu != ESC);
+        int choixDifficulte;
+
+        jeu(choixDifficulte, plateau_bateau, plateau_tirs, plateau_ennemi);
+
+        boucle_de_jeu (choixDifficulte, plateau_bateau, plateau_tirs, plateau_ennemi);
 
         system("cls");
-        menu();
     }
     else
     {
@@ -205,7 +198,6 @@ void menu()
             } while(toucheRetourMenu != ESC);
 
             system("cls");
-            menu();
         }
         else
         {
@@ -221,7 +213,6 @@ void menu()
                 } while(toucheRetourMenu != ESC);
 
                 system("cls");
-                menu();
             }
             else
             {
@@ -236,6 +227,7 @@ void menu()
             }
         }
     }
+    } while (1);
 }
 
 
