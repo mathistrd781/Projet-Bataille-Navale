@@ -1,25 +1,22 @@
-//
-// Created by mathi on 23/11/2022.
-//
-
 #include "header.h"
 
-void tir() {
+void tir(int choixDifficulte, char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi) {
     char toucheCurseur = '0';
     char toucheTir = '0';
     int x = 5, y = 86;
 
     gotoligcol(37, 55);
-    printf("ESPACE - Tirer");
+    printf("DOUBLE ESPACE - Tirer");
 
     gotoligcol(39, 55);
-    printf("ENTER - Changer d'action");
+    printf("DOUBLE ENTER - Changer d'action");
 
     gotoligcol(x, y);
     hide_cursor(1);
 
+    affichagePlateauJoueur (plateau_bateau, plateau_tirs, plateau_ennemi);
+
     do {
-        toucheTir = getch();
         do {
             toucheCurseur = getch();
         } while ((toucheCurseur != FLECHE_BAS) && (toucheCurseur != FLECHE_HAUT) && (toucheCurseur != FLECHE_DROITE) && (toucheCurseur != FLECHE_GAUCHE) && (toucheCurseur != SPACE) && (toucheCurseur != ENTER));
@@ -56,36 +53,39 @@ void tir() {
             case SPACE : //tirer
                 system("cls");
                 printf("%d, %d", x, y);
+                toucheCurseur = 1;
 
-                /*
-                 if (tabEnnemi[(x-3)/2][(y-82)/4] == NULL){ //tir dans l'eau
-                 gotoligcol(x, y);
-                 Couleur(bleu, CouleurFond);
-                 printf("%c", Rond);
+
+                 if (plateau_ennemi[(x-3)/2][(y-82)/4] == EMPTY_CELL){ //tir dans l'eau
+                     gotoligcol(x, y);
+                     Couleur(3, CouleurFond);
+                     printf("%c", Rond);
                  }
-                 else if (tabEnnemi[(x-3)/2][(y-82)/4] == OCCUPE){ //tir touche un bateau
-                 gotoligcol(x, y);
-                 Couleur(jaune, CouleurFond);
-                 printf("%c", Rond);
+                 else if (plateau_ennemi[(x-3)/2][(y-82)/4] != EMPTY_CELL){ //tir touche un bateau
+                     gotoligcol(x, y);
+                     Couleur(14, CouleurFond);
+                     printf("%c", Rond);
+                     plateau_tirs[(x-3)/2][(y-82)/4] = plateau_ennemi[(x-3)/2][(y-82)/4];
                  }
-                 else if ((tabEnnemi[(x-3)/2][(y-82)/4] == OCCUPE) && Bateau_Coule){ //tir coule un bateau
+                 /*else if ((plateau_ennemi[(x-3)/2][(y-82)/4] != EMPTY_CELL) && Bateau_Coule){ //tir coule un bateau
                  for (int i = 0; i < SIZE_BATEAU; i++){
-                        gotolicol(x+i, y); //si bateau place verticalement (gotoligcol(x, y+i) sinon)
-                        Couleur(rougeFonce, CouleurFond);
+                        gotoligcol(x+i, y); //si bateau place verticalement (gotoligcol(x, y+i) sinon)
+                        Couleur(4, CouleurFond);
                         printf("%c", Rond);
                     }
-                 }
-                 */
+                 }*/
+                Couleur(CouleurTexte, CouleurFond);
+
                 break;
 
             case ENTER : //retour choix action
                 system("cls");
                 hide_cursor(0);
-                jeu();
-                actionJoueur();
                 break;
         }
-    }while(toucheTir!=SPACE);
+    }while(toucheCurseur != SPACE && toucheCurseur != ENTER);
 
-
+    /*Sleep("2000");
+    system("cls");
+    hide_cursor(0);*/
 }
