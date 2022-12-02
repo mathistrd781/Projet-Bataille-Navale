@@ -1,9 +1,5 @@
-//
-// Created by mathi on 23/11/2022.
-//
-
 #include "header.h"
 
-void deplacerBateau(){
+void deplacerBateau(char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi){
 
 }
