@@ -4,12 +4,140 @@
 
 #include "header.h"
 
-void actionJoueur(){
+void actionJoueur(int choixDifficulte, char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi){
     int i;
     int x, y;
     char toucheAction = '0';
 
+    afficheJoueur ();
 
+    ///CURSEUR
+    x = 38;
+    y = 56;
+
+    do
+    {
+        do
+        {
+            toucheAction = getch();
+        } while ((toucheAction != 'P') && (toucheAction != 'H') && (toucheAction != ENTER) && (toucheAction != v) && (toucheAction != V) && (toucheAction != ESC));
+
+        if (toucheAction == ESC)
+        {
+            system("cls");
+        }
+        else
+        {
+            if ((toucheAction == v) || (toucheAction == V))
+            {
+                system("cls");
+
+                gotoligcol(1, 60);
+                printf("Bateaux Ennemis :");
+
+                affichagePlateau(plateau_ennemi, 5, 40);
+
+                ///Retour Plateau
+                Couleur(rougeFonce, CouleurFond);
+                gotoligcol(39, 55);
+                printf("V - Retour Plateau de jeu");
+                Couleur(CouleurTexte, CouleurFond);
+
+                do
+                {
+                    toucheAction = getch();
+                } while ((toucheAction != v) && (toucheAction != V));
+
+                system("cls");
+
+                affichagePlateauJoueur (plateau_bateau, plateau_tirs, plateau_ennemi);
+                afficheJoueur ();
+            }
+            else
+            {
+                gotoligcol(x, y);
+                printf(" ");
+
+                switch (toucheAction)
+                {
+                    case 'P' :
+
+                        if (x < 40) {
+                            if (x + 1 == 41)
+                                y = 56;
+                            if (x + 1 == 40)
+                                y = 56;
+                            if (x + 1 == 39)
+                                y = 56;
+
+                            x = x + 1;
+                            gotoligcol(x, y);
+                            printf("%c", FLECHE);
+                        }
+                        else
+                        {
+                            gotoligcol(x, y);
+                            printf("%c", FLECHE);
+                        }
+                        break;
+
+                    case 'H' :
+
+                        if (x > 38)
+                        {
+                            if (x - 1 == 40)
+                                y = 56;
+                            if (x - 1 == 39)
+                                y = 56;
+                            if (x - 1 == 38)
+                                y = 56;
+
+                            x = x - 1;
+                            gotoligcol(x, y);
+                            printf("%c", FLECHE);
+                        }
+                        else
+                        {
+                            gotoligcol(x, y);
+                            printf("%c", FLECHE);
+                        }
+                        break;
+                }
+            }
+        }
+    }while (toucheAction != ENTER && toucheAction != ESC);
+
+    ///ACTION
+    if (x == 38 && toucheAction != ESC)
+    {
+        system("cls");
+        tir(choixDifficulte, plateau_bateau, plateau_tirs, plateau_ennemi);
+        boucle_de_jeu(choixDifficulte, plateau_bateau, plateau_tirs, plateau_ennemi);
+    }
+    else
+    {
+        if (x == 39 && toucheAction != ESC)
+        {
+            system("cls");
+            Eclairage (plateau_bateau, plateau_tirs, plateau_ennemi);
+            boucle_de_jeu(choixDifficulte, plateau_bateau, plateau_tirs, plateau_ennemi);
+        }
+        else
+        {
+            if (x == 40 && toucheAction != ESC)
+            {
+                system("cls");
+                //Déplacer bateau
+                boucle_de_jeu(choixDifficulte, plateau_bateau, plateau_tirs, plateau_ennemi);
+            }
+        }
+    }
+}
+
+
+void afficheJoueur ()
+{
+    int i, x, y;
     ///AFFICHAGE COMMANDES
     Couleur(rougeFonce, CouleurFond);
 
@@ -73,127 +201,4 @@ void actionJoueur(){
     printf("Informations joueurs :");
     gotoligcol(35, 105);
     printf("Informations Ennemis :");
-
-
-    ///CURSEUR
-    x = 38;
-    y = 56;
-
-    do
-    {
-        do
-        {
-            toucheAction = getch();
-        } while ((toucheAction != 'P') && (toucheAction != 'H') && (toucheAction != ENTER) && (toucheAction != v) && (toucheAction != V) && (toucheAction != ESC));
-
-        if (toucheAction == ESC)
-        {
-            system("cls");
-            menu();
-        }
-        else
-        {
-            if ((toucheAction == v) || (toucheAction == V))
-            {
-                system("cls");
-                char ** plateauEnnemi = genererPlateau(HAUTEUR, LARGEUR);
-
-                gotoligcol(1, 60);
-                printf("Bateaux Ennemis :");
-                affichagePlateau(plateauEnnemi, 5, 40);
-                freePlateau(plateauEnnemi, HAUTEUR);
-
-                ///Retour Plateau
-                Couleur(rougeFonce, CouleurFond);
-                gotoligcol(39, 55);
-                printf("V - Retour Plateau de jeu");
-                Couleur(CouleurTexte, CouleurFond);
-
-                do
-                {
-                    toucheAction = getch();
-                } while ((toucheAction != v) && (toucheAction != V));
-
-                system("cls");
-                jeu();
-                actionJoueur();
-            }
-            else
-            {
-                gotoligcol(x, y);
-                printf(" ");
-
-                switch (toucheAction)
-                {
-                    case 'P' :
-
-                        if (x < 40) {
-                            if (x + 1 == 41)
-                                y = 56;
-                            if (x + 1 == 40)
-                                y = 56;
-                            if (x + 1 == 39)
-                                y = 56;
-
-                            x = x + 1;
-                            gotoligcol(x, y);
-                            printf("%c", FLECHE);
-                        }
-                        else
-                        {
-                            gotoligcol(x, y);
-                            printf("%c", FLECHE);
-                        }
-                        break;
-
-                    case 'H' :
-
-                        if (x > 38)
-                        {
-                            if (x - 1 == 40)
-                                y = 56;
-                            if (x - 1 == 39)
-                                y = 56;
-                            if (x - 1 == 38)
-                                y = 56;
-
-                            x = x - 1;
-                            gotoligcol(x, y);
-                            printf("%c", FLECHE);
-                        }
-                        else
-                        {
-                            gotoligcol(x, y);
-                            printf("%c", FLECHE);
-                        }
-                        break;
-                }
-            }
-        }
-    }while (toucheAction != ENTER);
-
-    ///ACTION
-    if (x == 38)
-    {
-        system("cls");
-        //Tirer
-        jeu();
-        tir();
-    }
-    else
-    {
-        if (x == 39)
-        {
-            system("cls");
-            //Eclairer
-        }
-        else
-        {
-            if (x == 40)
-            {
-                system("cls");
-                //Déplacer bateau
-            }
-        }
-    }
 }
