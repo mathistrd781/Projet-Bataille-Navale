@@ -1,7 +1,3 @@
-//
-// Created by mathi on 23/11/2022.
-//
-
 #include "header.h"
 
 
@@ -27,6 +23,7 @@ void freePlateau(char ** plateau, int hauteur) {
 
 
 void affichagePlateau(char ** plateau, int x_initial, int y_initial) {
+
     if (plateau == NULL)
         return;
 
@@ -79,6 +76,81 @@ void affichagePlateau(char ** plateau, int x_initial, int y_initial) {
 }
 
 
+void affichagePlateauJoueur (char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi)
+{
+    gotoligcol(1, 7);
+    printf("Vos Bateaux :");
+    affichagePlateau(plateau_bateau, 3, 2);
 
+    gotoligcol(1, 85);
+    printf("Vos tirs :");
+    affichagePlateau(plateau_tirs, 3, 80);
 
+    //heure();
 
+    //chronometre ();
+}
+
+void vider_Plateau (char ** plateau_bateau)
+{
+    for (int i = 0; i<SIZE_TAB; i++)
+    {
+        for (int j = 0; j<SIZE_TAB; j++)
+        {
+            plateau_bateau[i][j] = EMPTY_CELL;
+        }
+    }
+}
+
+void heure ()
+{
+    int h, min, s, day, mois, an;
+    time_t now;
+
+    // Renvoie l'heure actuelle
+    time(&now);
+    // Convertir au format heure locale
+    gotoligcol(37, 15);
+    struct tm *local = localtime(&now);
+    h = local->tm_hour;
+    min = local->tm_min;
+    s = local->tm_sec;
+    day = local->tm_mday;
+    mois = local->tm_mon + 1;
+    an = local->tm_year + 1900;
+    gotoligcol(39, 15);
+    printf("L'heure : %02d:%02d:%02d\n", h, min, s);
+    // Afficher la date courante
+    gotoligcol(41, 15);
+    printf("La date : %02d/%02d/%d\n", day, mois, an);
+}
+
+void chronometre ()
+{
+    int valeur = 60;
+    double temps = 0;
+
+    temps = clock();
+
+    if ((int)((clock()-temps) / CLOCKS_PER_SEC) > valeur) {
+        system("clear");
+        gotoligcol(43, 15);
+        printf("%d", valeur);
+        ++valeur;
+    }
+
+    gotoligcol(50, 15);
+    printf("%ld \n", clock());
+    printf("%ld", temps);
+    /*
+
+    do {
+        gotoligcol(43, 15);
+        printf("%d secondes", valeur);
+
+        valeur--;
+        Sleep(1000);
+    } while (valeur != 0);
+
+    printf("\a\n\nFIN DU COMPTE A REBOURS\a");*/
+}
