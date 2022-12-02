@@ -29,7 +29,7 @@
 #define vertFluo 10
 #define turquoise 11
 #define rougeFluo 12
-#define violet 13
+#define rose 13
 #define jaune 14
 #define blanc 15
 
@@ -84,6 +84,13 @@
 #define SIZE_DESTROYER 3
 #define SIZE_CROISEUR 5
 
+#define NOMBRE_SOUS_MARIN 4
+#define NOMBRE_PORTE_AVION 1
+#define NOMBRE_DESTROYER 2
+#define NOMBRE_CROISEUR 3
+#define EMPTY_CELL ' '
+
+
 
 ///Source campus
 void gotoligcol(int lig, int col);
@@ -93,18 +100,35 @@ void hide_cursor(int visible);
 
 ///Presentation et menu
 void presentation();
-void menu();
+void menu(char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi);
 
 
 ///Jeu
-void jeu();
-void actionJoueur();
+void jeu(int choixDifficulte, char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi);
+void actionJoueur(int choixDifficulte, char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi);
 char ** genererPlateau(int hauteur, int largeur);
 void affichagePlateau(char ** tableau, int x_initial, int y_initial);
 void freePlateau(char ** plateau, int height);
-void tir();
-void fusee();
-void deplacerBateau();
+void tir(int choixDifficulte, char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi);
+void chargerPartie(char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi);
+void deplacerBateau(char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi);
+void afficheJoueur ();
+void affichagePlateauJoueur (char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi);
+void vider_Plateau (char ** plateau_bateau);
+void boucle_de_jeu (int choixDifficulte, char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi);
+void Eclairage(char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi);
+void heure();
+void chronometre ();
+
+
+
+
+///IA
+int choixIA ();
+void IA (int choixdificulte, char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi);
+void IA1(char ** plateau_bateau);
+void IA2(char ** plateau_bateau);
+void IA3(char ** plateau_bateau);
 
 
 //unsigned int getSizeBateau(e_type_bateau type);
@@ -157,6 +181,9 @@ typedef struct bateau {
 }t_bateau;
 
 
+unsigned int getSizeBateau(e_type_bateau type);
+int iterPosDirection(e_direction direction, t_coord *pos) ;
+void placementBateau(char **tableau_bateau, e_type_bateau type_bateau);
 
 #endif //PROJET_BATAILLE_NAVALE_HEADER_H
 
