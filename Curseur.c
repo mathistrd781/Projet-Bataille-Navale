@@ -1,7 +1,3 @@
-//
-// Created by mathi on 14/11/2022.
-//
-
 #include "header.h"
 
 ///SOURCE CAMPUS ONLINE
