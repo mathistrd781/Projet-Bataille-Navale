@@ -171,12 +171,12 @@ void menu(char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi)
         }
     } while(toucheMenu!=ENTER);
 
+    int choixDifficulte;
+
     ///ACTION
     if(x == 15)
     {
         system("cls");
-
-        int choixDifficulte;
 
         jeu(choixDifficulte, plateau_bateau, plateau_tirs, plateau_ennemi);
 
@@ -189,13 +189,12 @@ void menu(char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi)
         if(x == 17)
         {
             system("cls");
-            //Charger une partie
+            vider_Plateau(plateau_bateau);
+            vider_Plateau(plateau_tirs);
+            vider_Plateau(plateau_ennemi);
 
-            ///RETOUR MENU
-            do
-            {
-                toucheRetourMenu = getch();
-            } while(toucheRetourMenu != ESC);
+            chargerPartie(choixDifficulte, plateau_bateau,plateau_tirs,plateau_ennemi);
+            boucle_de_jeu(choixDifficulte, plateau_bateau,plateau_tirs,plateau_ennemi);
 
             system("cls");
         }
@@ -207,10 +206,7 @@ void menu(char ** plateau_bateau, char ** plateau_tirs, char ** plateau_ennemi)
                 aide(); //Aide (règles du jeu et touches clavier)
 
                 ///RETOUR MENU
-                do
-                {
-                    toucheRetourMenu = getch();
-                } while(toucheRetourMenu != ESC);
+
 
                 system("cls");
             }
