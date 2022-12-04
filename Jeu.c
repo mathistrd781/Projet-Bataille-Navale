@@ -53,4 +53,6 @@ void boucle_de_jeu (int choixDifficulte, char ** plateau_bateau, char ** plateau
     actionJoueur(choixDifficulte, plateau_bateau, plateau_tirs, plateau_ennemi);
 
     IA (choixDifficulte, plateau_bateau, plateau_tirs, plateau_ennemi);
+
+    sauvegardePartie(choixDifficulte, plateau_bateau,plateau_ennemi,plateau_tirs);
 }
