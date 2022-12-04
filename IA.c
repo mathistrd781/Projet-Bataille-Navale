@@ -1,6 +1,5 @@
 #include "header.h"
 
-
 int choixIA () // choix du level de difficulté
 {
     int x = 21, y = 68;
